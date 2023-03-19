@@ -1,6 +1,6 @@
 import pygame
 from room_gen import rand_map, room_choose
-from minimap import init_minimap
+from minimap import init_minimap, minimap_player
 
 WIDTH = 1280
 HEIGHT = 768
@@ -34,40 +34,57 @@ room = pygame.image.load(room_choose(map, room_x, room_y))
 running = True
 while running:
 
-    screen.fill("Grey")
+    
+    init_minimap(map, room)
+    minimap_player(map, room)
 
     # Room changing
-    if player1_x < 226 and map[room_x][room_y - 1] == 1:
+    if player1_x < 226 and map[room_x][room_y - 1] in range(1, 3):
+            map[room_x][room_y] = 1
+            map[room_x][room_y - 1] = 2
             room_y -= 1
             room = pygame.image.load(room_choose(map, room_x, room_y))
             player1_x = 965
             player1_y = 408
-    if player1_x > 1000 and map[room_x][room_y + 1] == 1:
+            minimap_player(map, room)
+
+
+    if player1_x > 1000 and map[room_x][room_y + 1] in range(1, 3):
+            map[room_x][room_y] = 1
+            map[room_x][room_y + 1] = 2
             room_y += 1
             room = pygame.image.load(room_choose(map, room_x, room_y))
             player1_x = 258
             player1_y = 418
-    if player1_y < 195 and map[room_x - 1][room_y] == 1:
+            minimap_player(map, room)
+
+    if player1_y < 195 and map[room_x - 1][room_y] in range(1, 3):
+            map[room_x][room_y] = 1
+            map[room_x - 1][room_y] = 2
             room_x -= 1
             room = pygame.image.load(room_choose(map, room_x, room_y))
             player1_x = 611
             player1_y = 603
-    if player1_y > 640 and map[room_x + 1][room_y] == 1:
+            minimap_player(map, room)
+
+    if player1_y > 640 and map[room_x + 1][room_y] in range(1, 3):
+            map[room_x][room_y] = 1
+            map[room_x + 1][room_y] = 2
             room_x += 1
             room = pygame.image.load(room_choose(map, room_x, room_y))
             player1_x = 604
             player1_y = 224
+            minimap_player(map, room)
 
     screen.blit(room, (0, 0))
 
-    init_minimap(map, room_x, room_y, room)
+    
 
     
 
 
     screen.blit(player, (player1_x, player1_y))
 
-    # pygame.draw.rect(room, "Grey", (900, 30, 140, 140))
 
     
 
