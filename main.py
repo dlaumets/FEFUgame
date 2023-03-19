@@ -34,16 +34,39 @@ running = True
 while running:
 
     screen.fill("Grey")
+
+    # Room changing
+    if player1_x < 226 and map[room_x][room_y - 1] == 1:
+            room_y -= 1
+            room = pygame.image.load(room_choose(map, room_x, room_y))
+            player1_x = 965
+            player1_y = 408
+    if player1_x > 1000 and map[room_x][room_y + 1] == 1:
+            room_y += 1
+            room = pygame.image.load(room_choose(map, room_x, room_y))
+            player1_x = 258
+            player1_y = 418
+    if player1_y < 195 and map[room_x - 1][room_y] == 1:
+            room_x -= 1
+            room = pygame.image.load(room_choose(map, room_x, room_y))
+            player1_x = 611
+            player1_y = 603
+    if player1_y > 640 and map[room_x + 1][room_y] == 1:
+            room_x += 1
+            room = pygame.image.load(room_choose(map, room_x, room_y))
+            player1_x = 604
+            player1_y = 224
+
     screen.blit(room, (0, 0))
 
-
+    
 
 
     screen.blit(player, (player1_x, player1_y))
 
     
 
-
+    # Player moving
     keys = pygame.key.get_pressed()
     if keys[pygame.K_w] and keys[pygame.K_a]:
         if (player1_x > 246 or (player1_y > 378 and player1_y + player_hitbox.height < 510)) and (player1_y > 222 or (player1_x > 574 and player1_x + player_hitbox.width < 708)):
@@ -74,7 +97,6 @@ while running:
     elif keys[pygame.K_w]:
         if player1_y > 222 or (player1_x > 574 and player1_x + player_hitbox.width < 708):
             player1_y -= player_speed
-
 
 
     # print(player1_x, player1_y)
