@@ -1,5 +1,5 @@
 import pygame
-from room_gen import rand_map
+from room_gen import rand_map, room_choose
 
 WIDTH = 1280
 HEIGHT = 768
@@ -11,7 +11,7 @@ pygame.display.set_caption("FEFUgame")
 icon = pygame.image.load("img/icons/icon100.png")
 pygame.display.set_icon(icon)
 
-bg = pygame.image.load("img/rooms/urdl.jpeg")
+
 player = pygame.image.load("img/players/dimochka.png")
 
 
@@ -24,12 +24,17 @@ player_hitbox = player.get_rect(topleft = (player1_x, player1_y))
 player_speed = 0.5
 player_speed_diag = 0.4
 
+room_x = 4
+room_y = 4
+map = rand_map()
+room = pygame.image.load(room_choose(map, room_x, room_y))
+
 
 running = True
 while running:
 
     screen.fill("Grey")
-    screen.blit(bg, (0, 0))
+    screen.blit(room, (0, 0))
 
 
 

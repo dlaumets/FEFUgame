@@ -1,4 +1,5 @@
 import random
+from const import U, R, D, L, UR, UD, UL, DL, RL, RD, URDL, URD, UDL, URL, RDL 
 
 def rand_map():
     map = [
@@ -123,8 +124,55 @@ def rand_map():
                         break
 
 
-    # for i in range(10):
-    #     print(map[i])
+    for i in range(10):
+        print(map[i])
 
     return map
+
+def room_choose(map, i, j):
+    if map[i + 1][j] == 0 and map[i - 1][j] == 0 and map[i][j + 1] == 0 and map[i][j - 1] == 1:
+        return L
+    
+    elif map[i + 1][j] == 0 and map[i - 1][j] == 0 and map[i][j + 1] == 1 and map[i][j - 1] == 0:
+        return R
+
+    elif map[i + 1][j] == 0 and map[i - 1][j] == 0 and map[i][j + 1] == 1 and map[i][j - 1] == 1:
+        return RL
+
+    elif map[i + 1][j] == 0 and map[i - 1][j] == 1 and map[i][j + 1] == 0 and map[i][j - 1] == 0:
+        return U
+
+    elif map[i + 1][j] == 0 and map[i - 1][j] == 1 and map[i][j + 1] == 0 and map[i][j - 1] == 1:
+        return UL
+
+    elif map[i + 1][j] == 0 and map[i - 1][j] == 1 and map[i][j + 1] == 1 and map[i][j - 1] == 0:
+        return UR
+
+    elif map[i + 1][j] == 0 and map[i - 1][j] == 1 and map[i][j + 1] == 1 and map[i][j - 1] == 1:
+        return URL
+
+    elif map[i + 1][j] == 1 and map[i - 1][j] == 0 and map[i][j + 1] == 0 and map[i][j - 1] == 0:
+        return D
+
+    elif map[i + 1][j] == 1 and map[i - 1][j] == 0 and map[i][j + 1] == 0 and map[i][j - 1] == 1:
+        return DL
+
+    elif map[i + 1][j] == 1 and map[i - 1][j] == 0 and map[i][j + 1] == 1 and map[i][j - 1] == 0:
+        return RD
+    
+    elif map[i + 1][j] == 1 and map[i - 1][j] == 0 and map[i][j + 1] == 1 and map[i][j - 1] == 1:
+        return RDL
+
+    elif map[i + 1][j] == 1 and map[i - 1][j] == 1 and map[i][j + 1] == 0 and map[i][j - 1] == 0:
+        return UD
+
+    elif map[i + 1][j] == 1 and map[i - 1][j] == 1 and map[i][j + 1] == 0 and map[i][j - 1] == 1:
+        return UDL
+
+    elif map[i + 1][j] == 1 and map[i - 1][j] == 1 and map[i][j + 1] == 1 and map[i][j - 1] == 0:
+        return URD
+
+    elif map[i + 1][j] == 1 and map[i - 1][j] == 1 and map[i][j + 1] == 1 and map[i][j - 1] == 1:
+        return URDL
+
 
