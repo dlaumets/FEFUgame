@@ -22,8 +22,8 @@ player1_y = 300
 player_hitbox = player.get_rect(topleft = (player1_x, player1_y))
 
 
-player_speed = 0.5
-player_speed_diag = 0.4
+player_speed = 2
+player_speed_diag = 1
 
 room_x = 4
 room_y = 4
