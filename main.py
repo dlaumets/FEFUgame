@@ -1,5 +1,6 @@
 import pygame
 from room_gen import rand_map, room_choose
+from minimap import init_minimap
 
 WIDTH = 1280
 HEIGHT = 768
@@ -59,10 +60,14 @@ while running:
 
     screen.blit(room, (0, 0))
 
+    init_minimap(map, room_x, room_y, room)
+
     
 
 
     screen.blit(player, (player1_x, player1_y))
+
+    # pygame.draw.rect(room, "Grey", (900, 30, 140, 140))
 
     
 
