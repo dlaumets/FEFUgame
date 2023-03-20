@@ -1,7 +1,7 @@
 import pygame
-from room_gen import rand_map, room_choose
-from minimap import init_minimap, minimap_player
 from hero import Hero
+from enterface import Enterface
+from game import Game
 
 
 WIDTH = 1280
@@ -25,57 +25,56 @@ player.hitbox = player_texture.get_rect(topleft = (player.x, player.y))
 
 
 
-
-room_x = 4
-room_y = 4
-map = rand_map()
-room = pygame.image.load(room_choose(map, room_x, room_y))
+map = Game.map.rand_map()
+room = pygame.image.load(Game.map.room_choose(map, Enterface.room.room_x, Enterface.room.room_y))
 
 
 running = True
 while running:
 
     
-    init_minimap(map, room)
-    minimap_player(map, room)
+    Enterface.minimap.room_minimap(map, room)
+    Enterface.minimap.player_minimap(map, room)
+
 
     # Room changing
-    if player.x < 226 and map[room_x][room_y - 1] in range(1, 3):
-            map[room_x][room_y] = 1
-            map[room_x][room_y - 1] = 2
-            room_y -= 1
-            room = pygame.image.load(room_choose(map, room_x, room_y))
+    if player.x < 226 and map[Enterface.room.room_x][Enterface.room.room_y - 1] in range(1, 3):
+            map[Enterface.room.room_x][Enterface.room.room_y] = 1
+            map[Enterface.room.room_x][Enterface.room.room_y - 1] = 2
+            Enterface.room.room_y -= 1
+            room = pygame.image.load(Game.map.room_choose(map, Enterface.room.room_x, Enterface.room.room_y))
             player.x = 965
             player.y = 408
-            minimap_player(map, room)
+            Enterface.minimap.player_minimap(map, room)
 
 
-    if player.x > 1000 and map[room_x][room_y + 1] in range(1, 3):
-            map[room_x][room_y] = 1
-            map[room_x][room_y + 1] = 2
-            room_y += 1
-            room = pygame.image.load(room_choose(map, room_x, room_y))
+    if player.x > 1000 and map[Enterface.room.room_x][Enterface.room.room_y + 1] in range(1, 3):
+            map[Enterface.room.room_x][Enterface.room.room_y] = 1
+            map[Enterface.room.room_x][Enterface.room.room_y + 1] = 2
+            Enterface.room.room_y += 1
+            room = pygame.image.load(Game.map.room_choose(map, Enterface.room.room_x, Enterface.room.room_y))
             player.x = 258
             player.y = 418
-            minimap_player(map, room)
+            Enterface.minimap.player_minimap(map, room)
 
-    if player.y < 195 and map[room_x - 1][room_y] in range(1, 3):
-            map[room_x][room_y] = 1
-            map[room_x - 1][room_y] = 2
-            room_x -= 1
-            room = pygame.image.load(room_choose(map, room_x, room_y))
+    if player.y < 195 and map[Enterface.room.room_x - 1][Enterface.room.room_y] in range(1, 3):
+            map[Enterface.room.room_x][Enterface.room.room_y] = 1
+            map[Enterface.room.room_x - 1][Enterface.room.room_y] = 2
+            Enterface.room.room_x -= 1
+            room = pygame.image.load(Game.map.room_choose(map, Enterface.room.room_x, Enterface.room.room_y))
             player.x = 611
             player.y = 603
-            minimap_player(map, room)
+            Enterface.minimap.player_minimap(map, room)
 
-    if player.y > 640 and map[room_x + 1][room_y] in range(1, 3):
-            map[room_x][room_y] = 1
-            map[room_x + 1][room_y] = 2
-            room_x += 1
-            room = pygame.image.load(room_choose(map, room_x, room_y))
+
+    if player.y > 640 and map[Enterface.room.room_x + 1][Enterface.room.room_y] in range(1, 3):
+            map[Enterface.room.room_x][Enterface.room.room_y] = 1
+            map[Enterface.room.room_x + 1][Enterface.room.room_y] = 2
+            Enterface.room.room_x += 1
+            room = pygame.image.load(Game.map.room_choose(map, Enterface.room.room_x, Enterface.room.room_y))
             player.x = 604
             player.y = 224
-            minimap_player(map, room)
+            Enterface.minimap.player_minimap(map, room)
 
     screen.blit(room, (0, 0))
 
