@@ -1,6 +1,8 @@
 import pygame
 from room_gen import rand_map, room_choose
 from minimap import init_minimap, minimap_player
+from hero import Hero
+
 
 WIDTH = 1280
 HEIGHT = 768
@@ -13,17 +15,16 @@ icon = pygame.image.load("img/icons/icon100.png")
 pygame.display.set_icon(icon)
 
 
-player = pygame.image.load("img/players/dimochka.png")
+player_texture = pygame.image.load("img/players/dimochka.png")
 
 
-player1_x = 540
-player1_y = 300
-
-player_hitbox = player.get_rect(topleft = (player1_x, player1_y))
+player = Hero(player_texture, None, None, None, 0.6, 0.4, None, 540, 300)
+player.hitbox = player_texture.get_rect(topleft = (player.x, player.y))
 
 
-player_speed = 2
-player_speed_diag = 1
+
+
+
 
 room_x = 4
 room_y = 4
@@ -39,51 +40,48 @@ while running:
     minimap_player(map, room)
 
     # Room changing
-    if player1_x < 226 and map[room_x][room_y - 1] in range(1, 3):
+    if player.x < 226 and map[room_x][room_y - 1] in range(1, 3):
             map[room_x][room_y] = 1
             map[room_x][room_y - 1] = 2
             room_y -= 1
             room = pygame.image.load(room_choose(map, room_x, room_y))
-            player1_x = 965
-            player1_y = 408
+            player.x = 965
+            player.y = 408
             minimap_player(map, room)
 
 
-    if player1_x > 1000 and map[room_x][room_y + 1] in range(1, 3):
+    if player.x > 1000 and map[room_x][room_y + 1] in range(1, 3):
             map[room_x][room_y] = 1
             map[room_x][room_y + 1] = 2
             room_y += 1
             room = pygame.image.load(room_choose(map, room_x, room_y))
-            player1_x = 258
-            player1_y = 418
+            player.x = 258
+            player.y = 418
             minimap_player(map, room)
 
-    if player1_y < 195 and map[room_x - 1][room_y] in range(1, 3):
+    if player.y < 195 and map[room_x - 1][room_y] in range(1, 3):
             map[room_x][room_y] = 1
             map[room_x - 1][room_y] = 2
             room_x -= 1
             room = pygame.image.load(room_choose(map, room_x, room_y))
-            player1_x = 611
-            player1_y = 603
+            player.x = 611
+            player.y = 603
             minimap_player(map, room)
 
-    if player1_y > 640 and map[room_x + 1][room_y] in range(1, 3):
+    if player.y > 640 and map[room_x + 1][room_y] in range(1, 3):
             map[room_x][room_y] = 1
             map[room_x + 1][room_y] = 2
             room_x += 1
             room = pygame.image.load(room_choose(map, room_x, room_y))
-            player1_x = 604
-            player1_y = 224
+            player.x = 604
+            player.y = 224
             minimap_player(map, room)
 
     screen.blit(room, (0, 0))
 
     
 
-    
-
-
-    screen.blit(player, (player1_x, player1_y))
+    screen.blit(player.texture, (player.x, player.y))
 
 
     
@@ -91,37 +89,36 @@ while running:
     # Player moving
     keys = pygame.key.get_pressed()
     if keys[pygame.K_w] and keys[pygame.K_a]:
-        if (player1_x > 246 or (player1_y > 378 and player1_y + player_hitbox.height < 510)) and (player1_y > 222 or (player1_x > 574 and player1_x + player_hitbox.width < 708)):
-            player1_x -= player_speed_diag
-            player1_y -= player_speed_diag
+        if (player.x > 246 or (player.y > 378 and player.y + player.hitbox.height < 510)) and (player.y > 222 or (player.x > 574 and player.x + player.hitbox.width < 708)):
+            player.x -= player.diagonal_speed
+            player.y -= player.diagonal_speed
     elif keys[pygame.K_a] and keys[pygame.K_s]:
-        if (player1_x > 246 or (player1_y > 378 and player1_y + player_hitbox.height < 510)) and (player1_y < 614 or (player1_x > 574 and player1_x + player_hitbox.width < 708)):
-            player1_x -= player_speed_diag
-            player1_y += player_speed_diag
+        if (player.x > 246 or (player.y > 378 and player.y + player.hitbox.height < 510)) and (player.y < 614 or (player.x > 574 and player.x + player.hitbox.width < 708)):
+            player.x -= player.diagonal_speed
+            player.y += player.diagonal_speed
     elif keys[pygame.K_s] and keys[pygame.K_d]:
-        if (player1_y < 614 or (player1_x > 574 and player1_x + player_hitbox.width < 708)) and (player1_x < 970 or (player1_y > 378 and player1_y + player_hitbox.height < 510)):
-            player1_x += player_speed_diag
-            player1_y += player_speed_diag
+        if (player.y < 614 or (player.x > 574 and player.x + player.hitbox.width < 708)) and (player.x < 970 or (player.y > 378 and player.y + player.hitbox.height < 510)):
+            player.x += player.diagonal_speed
+            player.y += player.diagonal_speed
     elif keys[pygame.K_d] and keys[pygame.K_w]:
-        if (player1_x < 970 or (player1_y > 378 and player1_y + player_hitbox.height < 510)) and (player1_y > 222 or (player1_x > 574 and player1_x + player_hitbox.width < 708)):
-            player1_x += player_speed_diag
-            player1_y -= player_speed_diag
+        if (player.x < 970 or (player.y > 378 and player.y + player.hitbox.height < 510)) and (player.y > 222 or (player.x > 574 and player.x + player.hitbox.width < 708)):
+            player.x += player.diagonal_speed
+            player.y -= player.diagonal_speed
 
     elif keys[pygame.K_a]:
-        if player1_x > 246 or (player1_y > 378 and player1_y + player_hitbox.height < 510):
-            player1_x -= player_speed
+        if player.x > 246 or (player.y > 378 and player.y + player.hitbox.height < 510):
+            player.x -= player.speed
     elif keys[pygame.K_d]:
-        if player1_x < 970 or (player1_y > 378 and player1_y + player_hitbox.height < 510):
-            player1_x += player_speed
+        if player.x < 970 or (player.y > 378 and player.y + player.hitbox.height < 510):
+            player.x += player.speed
     elif keys[pygame.K_s]:
-        if player1_y < 614 or (player1_x > 574 and player1_x + player_hitbox.width < 708):
-            player1_y += player_speed
+        if player.y < 614 or (player.x > 574 and player.x + player.hitbox.width < 708):
+            player.y += player.speed
     elif keys[pygame.K_w]:
-        if player1_y > 222 or (player1_x > 574 and player1_x + player_hitbox.width < 708):
-            player1_y -= player_speed
+        if player.y > 222 or (player.x > 574 and player.x + player.hitbox.width < 708):
+            player.y -= player.speed
 
 
-    # print(player1_x, player1_y)
     pygame.display.update()
 
     for event in pygame.event.get():
