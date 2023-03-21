@@ -1,5 +1,6 @@
-from enterface import Enterface
+from const import L, R, U, D, DL, UD, UDL, UL, UR, URD, URDL, URL, RD, RDL, RL
 import random
+import pygame
 
 class Game():
     class map():
@@ -132,50 +133,49 @@ class Game():
             return map
 
         def room_choose(map, i, j):
+
             if map[i + 1][j] == 0 and map[i - 1][j] == 0 and map[i][j + 1] == 0 and map[i][j - 1] in range(1, 3):
-                return Enterface.room.L
+                return L
     
             elif map[i + 1][j] == 0 and map[i - 1][j] == 0 and map[i][j + 1] in range(1, 3) and map[i][j - 1] == 0:
-                return Enterface.room.R
+                return R
 
             elif map[i + 1][j] == 0 and map[i - 1][j] == 0 and map[i][j + 1] in range(1, 3) and map[i][j - 1] in range(1, 3):
-                return Enterface.room.RL
+                return RL
 
             elif map[i + 1][j] == 0 and map[i - 1][j] in range(1, 3) and map[i][j + 1] == 0 and map[i][j - 1] == 0:
-                return Enterface.room.U
+                return U
 
             elif map[i + 1][j] == 0 and map[i - 1][j] in range(1, 3) and map[i][j + 1] == 0 and map[i][j - 1] in range(1, 3):
-                return Enterface.room.UL
+                return UL
 
             elif map[i + 1][j] == 0 and map[i - 1][j] in range(1, 3) and map[i][j + 1] in range(1, 3) and map[i][j - 1] == 0:
-                return Enterface.room.UR
+                return UR
 
             elif map[i + 1][j] == 0 and map[i - 1][j] in range(1, 3) and map[i][j + 1] in range(1, 3) and map[i][j - 1] in range(1, 3):
-                return Enterface.room.URL
+                return URL
 
             elif map[i + 1][j] in range(1, 3) and map[i - 1][j] == 0 and map[i][j + 1] == 0 and map[i][j - 1] == 0:
-                return Enterface.room.D
+                return D
 
             elif map[i + 1][j] in range(1, 3) and map[i - 1][j] == 0 and map[i][j + 1] == 0 and map[i][j - 1] in range(1, 3):
-                return Enterface.room.DL
+                return DL
 
             elif map[i + 1][j] in range(1, 3) and map[i - 1][j] == 0 and map[i][j + 1] in range(1, 3) and map[i][j - 1] == 0:
-                return Enterface.room.RD
+                return RD
             
             elif map[i + 1][j] in range(1, 3) and map[i - 1][j] == 0 and map[i][j + 1] in range(1, 3) and map[i][j - 1] in range(1, 3):
-                return Enterface.room.RDL
+                return RDL
 
             elif map[i + 1][j] in range(1, 3) and map[i - 1][j] in range(1, 3) and map[i][j + 1] == 0 and map[i][j - 1] == 0:
-                return Enterface.room.UD
+                return UD
 
             elif map[i + 1][j] in range(1, 3) and map[i - 1][j] in range(1, 3) and map[i][j + 1] == 0 and map[i][j - 1] in range(1, 3):
-                return Enterface.room.UDL
+                return UDL
 
             elif map[i + 1][j] in range(1, 3) and map[i - 1][j] in range(1, 3) and map[i][j + 1] in range(1, 3) and map[i][j - 1] == 0:
-                return Enterface.room.URD
+                return URD
 
             elif map[i + 1][j] in range(1, 3) and map[i - 1][j] in range(1, 3) and map[i][j + 1] in range(1, 3) and map[i][j - 1] in range(1, 3):
-                return Enterface.room.URDL
-            
-
+                return URDL
             

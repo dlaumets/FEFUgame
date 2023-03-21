@@ -1,4 +1,5 @@
 import pygame
+from game import Game
 
 class Enterface():
 
@@ -19,9 +20,6 @@ class Enterface():
                         pygame.draw.rect(room, "Green", (1078 + (j + 1) * 20, 18 + (i + 1) * 20, 11, 11))
 
     class room():
-        room_x = 4
-        room_y = 4
-
         D = "img/rooms/d.jpeg"
         DL = "img/rooms/dl.jpeg"
         L = "img/rooms/l.jpeg"
@@ -38,4 +36,54 @@ class Enterface():
         URL = "img/rooms/url.jpeg"
         URDL = "img/rooms/urdl.jpeg"
 
-        
+        def room_changing(player, map, room_x, room_y, room): 
+
+            if player.x < 226 and map[room_x][room_y - 1] in range(1, 3):
+                map[room_x][room_y] = 1
+                map[room_x][room_y - 1] = 2
+                room_y -= 1
+                img = Game.map.room_choose(map, room_x, room_y)
+                print(img)
+                room = pygame.image.load(img)
+                player.x = 965
+                player.y = 408
+                Enterface.minimap.player_minimap(map, room)
+
+
+            if player.x > 1000 and map[room_x][room_y + 1] in range(1, 3):
+                map[room_x][room_y] = 1
+                map[room_x][room_y + 1] = 2
+                room_y += 1
+                img = Game.map.room_choose(map, room_x, room_y)
+                print(img)
+                room = pygame.image.load(img)
+                player.x = 258
+                player.y = 418
+                Enterface.minimap.player_minimap(map, room)
+
+            if player.y < 195 and map[room_x - 1][room_y] in range(1, 3):
+                map[room_x][room_y] = 1
+                map[room_x - 1][room_y] = 2
+                room_x -= 1
+                img = Game.map.room_choose(map, room_x, room_y)
+                print(img)
+                room = pygame.image.load(img)
+                player.x = 611
+                player.y = 603
+                Enterface.minimap.player_minimap(map, room)
+
+
+            if player.y > 640 and map[room_x + 1][room_y] in range(1, 3):
+                map[room_x][room_y] = 1
+                map[room_x + 1][room_y] = 2
+                room_x += 1
+                img = Game.map.room_choose(map, room_x, room_y)
+                print(img)
+                room = pygame.image.load(img)
+
+                player.x = 604
+                player.y = 224
+                Enterface.minimap.player_minimap(map, room)
+
+            
+            return room, room_x, room_y
