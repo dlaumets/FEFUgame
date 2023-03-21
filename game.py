@@ -176,3 +176,6 @@ class Game():
 
             elif map[i + 1][j] in range(1, 3) and map[i - 1][j] in range(1, 3) and map[i][j + 1] in range(1, 3) and map[i][j - 1] in range(1, 3):
                 return Enterface.room.URDL
+            
+
+            

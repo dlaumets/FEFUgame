@@ -1,5 +1,5 @@
 import pygame
-from hero import Hero
+import classes
 from enterface import Enterface
 from game import Game
 
@@ -18,7 +18,7 @@ pygame.display.set_icon(icon)
 player_texture = pygame.image.load("img/players/dimochka.png")
 
 
-player = Hero(player_texture, None, None, None, 0.6, 0.4, None, 540, 300)
+player = classes.Player(player_texture, None, None, None, 0.6, 0.4, None, 540, 300)
 player.hitbox = player_texture.get_rect(topleft = (player.x, player.y))
 
 
@@ -86,36 +86,7 @@ while running:
     
 
     # Player moving
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_w] and keys[pygame.K_a]:
-        if (player.x > 246 or (player.y > 378 and player.y + player.hitbox.height < 510)) and (player.y > 222 or (player.x > 574 and player.x + player.hitbox.width < 708)):
-            player.x -= player.diagonal_speed
-            player.y -= player.diagonal_speed
-    elif keys[pygame.K_a] and keys[pygame.K_s]:
-        if (player.x > 246 or (player.y > 378 and player.y + player.hitbox.height < 510)) and (player.y < 614 or (player.x > 574 and player.x + player.hitbox.width < 708)):
-            player.x -= player.diagonal_speed
-            player.y += player.diagonal_speed
-    elif keys[pygame.K_s] and keys[pygame.K_d]:
-        if (player.y < 614 or (player.x > 574 and player.x + player.hitbox.width < 708)) and (player.x < 970 or (player.y > 378 and player.y + player.hitbox.height < 510)):
-            player.x += player.diagonal_speed
-            player.y += player.diagonal_speed
-    elif keys[pygame.K_d] and keys[pygame.K_w]:
-        if (player.x < 970 or (player.y > 378 and player.y + player.hitbox.height < 510)) and (player.y > 222 or (player.x > 574 and player.x + player.hitbox.width < 708)):
-            player.x += player.diagonal_speed
-            player.y -= player.diagonal_speed
-
-    elif keys[pygame.K_a]:
-        if player.x > 246 or (player.y > 378 and player.y + player.hitbox.height < 510):
-            player.x -= player.speed
-    elif keys[pygame.K_d]:
-        if player.x < 970 or (player.y > 378 and player.y + player.hitbox.height < 510):
-            player.x += player.speed
-    elif keys[pygame.K_s]:
-        if player.y < 614 or (player.x > 574 and player.x + player.hitbox.width < 708):
-            player.y += player.speed
-    elif keys[pygame.K_w]:
-        if player.y > 222 or (player.x > 574 and player.x + player.hitbox.width < 708):
-            player.y -= player.speed
+    classes.Player.moving(player)
 
 
     pygame.display.update()
