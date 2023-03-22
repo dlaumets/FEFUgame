@@ -16,6 +16,7 @@ pygame.display.set_icon(icon)
 
 
 player_texture = pygame.image.load("img/players/dimochka.png")
+lenin = pygame.image.load("img/enemy/lenin..png")
 
 
 player = classes.Player(player_texture, None, None, None, 0.6, 0.4, None, 540, 300)
@@ -42,7 +43,7 @@ while running:
 
     screen.blit(room, (0, 0))
 
-    
+    print(player.x, player.y)
 
     screen.blit(player.texture, (player.x, player.y))
 
