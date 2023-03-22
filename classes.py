@@ -21,33 +21,46 @@ class Player(Character):
         
         keys = pygame.key.get_pressed()
         if keys[pygame.K_w] and keys[pygame.K_a]:
-            if (self.x > 246 or (self.y > 378 and self.y + self.hitbox.height < 510)) and (self.y > 222 or (self.x > 574 and self.x + self.hitbox.width < 708)):
+            if (self.x > 246 or (self.y > 378 and self.y + self.hitbox.height < 510)):
                 self.x -= self.diagonal_speed
+            if (self.y > 222 or (self.x > 574 and self.x + self.hitbox.width < 708)):
                 self.y -= self.diagonal_speed
         elif keys[pygame.K_a] and keys[pygame.K_s]:
-            if (self.x > 246 or (self.y > 378 and self.y + self.hitbox.height < 510)) and (self.y < 614 or (self.x > 574 and self.x + self.hitbox.width < 708)):
+            if (self.x > 246 or (self.y > 378 and self.y + self.hitbox.height < 510)):
                 self.x -= self.diagonal_speed
+            if (self.y < 614 or (self.x > 574 and self.x + self.hitbox.width < 708)):
                 self.y += self.diagonal_speed
         elif keys[pygame.K_s] and keys[pygame.K_d]:
-            if (self.y < 614 or (self.x > 574 and self.x + self.hitbox.width < 708)) and (self.x < 970 or (self.y > 378 and self.y + self.hitbox.height < 510)):
-                self.x += self.diagonal_speed
+            if (self.y < 614 or (self.x > 574 and self.x + self.hitbox.width < 708)):
                 self.y += self.diagonal_speed
-        elif keys[pygame.K_d] and keys[pygame.K_w]:
-            if (self.x < 970 or (self.y > 378 and self.y + self.hitbox.height < 510)) and (self.y > 222 or (self.x > 574 and self.x + self.hitbox.width < 708)):
+            if (self.x < 970 or (self.y > 378 and self.y + self.hitbox.height < 510)):
                 self.x += self.diagonal_speed
+        elif keys[pygame.K_d] and keys[pygame.K_w]:
+            if (self.x < 970 or (self.y > 378 and self.y + self.hitbox.height < 510)):
+                self.x += self.diagonal_speed
+            if (self.y > 222 or (self.x > 574 and self.x + self.hitbox.width < 708)):
                 self.y -= self.diagonal_speed
 
         elif keys[pygame.K_a]:
             if self.x > 246 or (self.y > 378 and self.y + self.hitbox.height < 510):
                 self.x -= self.speed
         elif keys[pygame.K_d]:
-            if self.x < 970 or (self.y > 378 and self.y + self.hitbox.height < 510):
+            if not(self.y > 222 and self.y < 614):
+                if (self.x > 574 and self.x < 645):
+                    self.x += self.speed
+            elif self.x < 970 or (self.y > 378 and self.y < 510):
                 self.x += self.speed
         elif keys[pygame.K_s]:
-            if self.y < 614 or (self.x > 574 and self.x + self.hitbox.width < 708):
+            if not(self.x > 244 and self.x < 972):
+                if (self.y > 378 and self.y < 448):
+                    self.y += self.speed
+            elif self.y < 614 or (self.x > 574 and self.x < 708):
                 self.y += self.speed
         elif keys[pygame.K_w]:
-            if self.y > 222 or (self.x > 574 and self.x + self.hitbox.width < 708):
+            if not(self.x > 244 and self.x < 972):
+                if (self.y > 380 and self.y < 452):
+                    self.y -= self.speed
+            elif self.y > 222 or (self.x > 574 and self.x < 708):
                 self.y -= self.speed
 
 class Enemy(Character):

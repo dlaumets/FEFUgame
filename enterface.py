@@ -1,5 +1,4 @@
 import pygame
-
 class Enterface():
 
 
@@ -37,5 +36,26 @@ class Enterface():
         URD = "img/rooms/urd.jpeg"
         URL = "img/rooms/url.jpeg"
         URDL = "img/rooms/urdl.jpeg"
+
+    
+
+    # Экран + меню
+    class Menu():
+        def menu():
+            def start_the_game():
+                return True
+            import pygame_menu
+            pygame.init()
+
+            surface = pygame.display.set_mode((500, 200))
+
+            menu = pygame_menu.Menu('Welcome', 500, 200,
+                                theme=pygame_menu.themes.THEME_BLUE)
+
+            menu.add.text_input('Name :', default='John Doe')
+            menu.add.button('Play', start_the_game)
+            menu.add.button('Quit', pygame_menu.events.EXIT)
+
+            menu.mainloop(surface)
 
         

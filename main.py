@@ -31,11 +31,11 @@ room = pygame.image.load(Game.map.room_choose(map, Enterface.room.room_x, Enterf
 
 running = True
 while running:
-
+#   Enterface.Menu.menu()
+#   if Enterface.Menu.menu():
     
     Enterface.minimap.room_minimap(map, room)
     Enterface.minimap.player_minimap(map, room)
-
 
     # Room changing
     if player.x < 226 and map[Enterface.room.room_x][Enterface.room.room_y - 1] in range(1, 3):
