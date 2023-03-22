@@ -1,7 +1,7 @@
 import pygame
-import classes
-from enterface import Enterface
-from game import Game
+import class_files.classes as classes
+from class_files.interface import Interface
+from class_files.game import Game
 
 
 WIDTH = 1280
@@ -16,7 +16,6 @@ pygame.display.set_icon(icon)
 
 
 player_texture = pygame.image.load("img/players/dimochka.png")
-lenin = pygame.image.load("img/enemy/lenin..png")
 
 
 player = classes.Player(player_texture, None, None, None, 0.6, 0.4, None, 540, 300)
@@ -35,15 +34,13 @@ running = True
 while running:
 
     
-    Enterface.minimap.room_minimap(map, room)
-    Enterface.minimap.player_minimap(map, room)
+    Interface.minimap.room_minimap(map, room)
+    Interface.minimap.player_minimap(map, room)
 
 
-    room, room_x, room_y = Enterface.room.room_changing(player, map, room_x, room_y, room)
+    room, room_x, room_y = Interface.room.room_changing(player, map, room_x, room_y, room)
 
     screen.blit(room, (0, 0))
-
-    print(player.x, player.y)
 
     screen.blit(player.texture, (player.x, player.y))
 
