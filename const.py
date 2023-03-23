@@ -15,3 +15,11 @@ UR = "img/rooms/ur.jpeg"
 URD = "img/rooms/urd.jpeg"
 URL = "img/rooms/url.jpeg"
 URDL = "img/rooms/urdl.jpeg"
+
+room_x = 4
+room_y = 4
+
+WIDTH = 1280
+HEIGHT = 768
+
+running = True
