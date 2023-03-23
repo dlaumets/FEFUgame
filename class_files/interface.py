@@ -94,22 +94,121 @@ class Interface():
 
 
     class menu():
+        def player_choose(screen, running):
+            on = pygame.image.load("img/sound/on.png")
+            off = pygame.image.load("img/sound/off.png")
+
+            menu = pygame.image.load("img/menu/main_menu.jpg")
+            vanechka = pygame.image.load("img/players/big/vanechka.png")
+            shaman = pygame.image.load("img/players/big/shaman.png")
+            dimochka = pygame.image.load("img/players/big/dimochka.png")
+
+            dimochka_small = pygame.image.load("img/players/dimochka.png")
+            vanechka_small = pygame.image.load("img/players/vanechka.png")
+            shaman_small = pygame.image.load("img/players/shaman.png")
+
+
+
+            flPause = False
+
+            choose = 1
+
+            while running:
+                screen.blit(menu, (0, 0))
+
+                if not flPause:
+                    screen.blit(on, (10, 10))
+                else:
+                    screen.blit(off, (10, 10))
+
+                Interface.print_text(screen, "Choose a player", 200, 70, "Brown", "fonts/SuperWebcomicBros_Rusbyyakustick_-Regular_0.ttf", 45)
+                Interface.print_text(screen, "The Legend of ACSiE", 800, 70, "Brown", "fonts/FerdinandFont-Regular.ttf", 45)
+                Interface.print_text(screen, "Tears of students", 860, 120, "Brown", "fonts/FerdinandFont-Regular.ttf", 35)
+
+                screen.blit(vanechka, (100, 300))
+                screen.blit(dimochka, (500, 249))
+                screen.blit(shaman, (950, 200))
+
+
+                if choose == 0:
+                    pygame.draw.rect(screen, "Light Green", (100, 300, 200, 200), 5)
+                elif choose == 1:
+                    pygame.draw.rect(screen, "Light Green", (500, 249, 250, 251), 5)
+                elif choose == 2:
+                    pygame.draw.rect(screen, "Light Green", (950, 200, 200, 300), 5)
+
+
+                Interface.print_text(screen, "HP: ||", 165, 510, "White", "fonts/FerdinandFont-Regular.ttf", 25)
+                Interface.print_text(screen, "DMG: ||||", 165, 540, "White", "fonts/FerdinandFont-Regular.ttf", 25)
+                Interface.print_text(screen, "HP: |||", 600, 510, "White", "fonts/FerdinandFont-Regular.ttf", 25)
+                Interface.print_text(screen, "DMG: |||", 600, 540, "White", "fonts/FerdinandFont-Regular.ttf", 25)
+                Interface.print_text(screen, "HP: ||||", 1015, 510, "White", "fonts/FerdinandFont-Regular.ttf", 25)
+                Interface.print_text(screen, "DMG: ||", 1015, 540, "White", "fonts/FerdinandFont-Regular.ttf", 25)
+
+                
+
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        running = False
+                        pygame.quit()
+                    elif event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_m:
+                            flPause = not flPause
+                            if flPause:
+                                pygame.mixer.music.pause()
+                            else:
+                                pygame.mixer.music.unpause()
+                        if event.key == pygame.K_LEFT:
+                            if choose == 1:
+                                choose = 0
+                            elif choose == 2:
+                                choose = 1
+                            else:
+                                choose = 2
+                        if event.key == pygame.K_RIGHT:
+                            if choose == 1:
+                                choose = 2
+                            elif choose == 2:
+                                choose = 0
+                            else:
+                                choose = 1   
+
+                        if event.key == pygame.K_SPACE:
+                            print(choose)
+                            if choose == 0:
+                                Interface.game.main_game(screen, vanechka_small, 2, 4)
+                            elif choose == 1:
+                                Interface.game.main_game(screen, dimochka_small, 3, 3)
+                            else:
+                                Interface.game.main_game(screen, shaman_small, 4, 2)
+
+                pygame.display.update()
+
+
 
         def main_menu(screen, running):
+            on = pygame.image.load("img/sound/on.png")
+            off = pygame.image.load("img/sound/off.png")
+
+            pygame.mixer.music.load("music/main.mp3")
+            pygame.mixer.music.play(-1)
             FPS = 15
             direct_y = 1
             clock = pygame.time.Clock()
 
             menu = pygame.image.load("img/menu/main_menu.jpg")
             y = 540
+            flPause = 0
+
             while running:
-                for event in pygame.event.get():
-                    if event.type == pygame.QUIT:
-                        running = False
-                        pygame.quit()
-                
                 clock.tick(FPS)
                 screen.blit(menu, (0, 0))
+                
+                if not flPause:
+                    screen.blit(on, (10, 10))
+                else:
+                    screen.blit(off, (10, 10))
+
                 Interface.print_text(screen, "The Legend of ACSiE", 800, 70, "Brown", "fonts/FerdinandFont-Regular.ttf", 45)
                 Interface.print_text(screen, "Tears of students", 860, 120, "Brown", "fonts/FerdinandFont-Regular.ttf", 35)
 
@@ -122,16 +221,32 @@ class Interface():
 
                 pygame.display.update()
 
-                
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        running = False
+                        pygame.quit()
+                    elif event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_m:
+                            flPause = not flPause
+                            if flPause:
+                                pygame.mixer.music.pause()
+                            else:
+                                pygame.mixer.music.unpause()
+                        if event.key == pygame.K_SPACE:
+                            Interface.menu.player_choose(screen, running)
+
 
                 
 
     class game():
-        def main_game(screen, room_x, room_y, running):
-            player_texture = pygame.image.load("img/players/dimochka.png")
+        def main_game(screen, texture, hp, damage):
+            room_x = 4
+            room_y = 4
+            running = True
+            # player_texture = pygame.image.load("img/players/dimochka.png")
 
-            player = Player(player_texture, None, None, None, 0.6, 0.4, None, 540, 300)
-            player.hitbox = player_texture.get_rect(topleft = (player.x, player.y))
+            player = Player(texture, None, hp, damage, 0.6, 0.4, None, 540, 300)
+            player.hitbox = texture.get_rect(topleft = (player.x, player.y))
 
             map = Game.map.rand_map()
             room = pygame.image.load(Game.map.room_choose(map, room_x, room_y))
