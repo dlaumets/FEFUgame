@@ -1,10 +1,15 @@
 import pygame
 from class_files.game import Game
 from class_files.classes import Player
+import time
 
 
 
 class Interface():
+    def print_text(screen, message, x, y, font_color=(0, 0, 0), font_type = "", font_size = 0):
+        font_type = pygame.font.Font(font_type, font_size)
+        text = font_type.render(message, True, font_color)
+        screen.blit(text, (x, y))
 
 
     class minimap():
@@ -91,17 +96,35 @@ class Interface():
     class menu():
 
         def main_menu(screen, running):
+            FPS = 15
+            direct_y = 1
+            clock = pygame.time.Clock()
+
             menu = pygame.image.load("img/menu/main_menu.jpg")
-
+            y = 540
             while running:
-                screen.blit(menu, (0, 0))
-
-                pygame.display.update()
-
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         running = False
                         pygame.quit()
+                
+                clock.tick(FPS)
+                screen.blit(menu, (0, 0))
+                Interface.print_text(screen, "The Legend of ACSiE", 800, 70, "Brown", "fonts/FerdinandFont-Regular.ttf", 45)
+                Interface.print_text(screen, "Tears of students", 860, 120, "Brown", "fonts/FerdinandFont-Regular.ttf", 35)
+
+
+                Interface.print_text(screen, "Press SPACE to START", 430, y, "Grey", "fonts/SuperWebcomicBros_Rusbyyakustick_-Regular_0.ttf", 45) 
+                y += direct_y
+
+                if y > 545 or y < 535:
+                    direct_y = -direct_y
+
+                pygame.display.update()
+
+                
+
+                
 
     class game():
         def main_game(screen, room_x, room_y, running):
@@ -132,3 +155,4 @@ class Interface():
                     if event.type == pygame.QUIT:
                         running = False
                         pygame.quit()
+
