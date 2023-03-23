@@ -1,5 +1,8 @@
 import pygame
 from class_files.game import Game
+from class_files.classes import Player
+
+
 
 class Interface():
 
@@ -43,7 +46,6 @@ class Interface():
                 map[room_x][room_y - 1] = 2
                 room_y -= 1
                 img = Game.map.room_choose(map, room_x, room_y)
-                print(img)
                 room = pygame.image.load(img)
                 player.x = 965
                 player.y = 408
@@ -55,7 +57,6 @@ class Interface():
                 map[room_x][room_y + 1] = 2
                 room_y += 1
                 img = Game.map.room_choose(map, room_x, room_y)
-                print(img)
                 room = pygame.image.load(img)
                 player.x = 258
                 player.y = 418
@@ -66,7 +67,6 @@ class Interface():
                 map[room_x - 1][room_y] = 2
                 room_x -= 1
                 img = Game.map.room_choose(map, room_x, room_y)
-                print(img)
                 room = pygame.image.load(img)
                 player.x = 611
                 player.y = 603
@@ -78,12 +78,57 @@ class Interface():
                 map[room_x + 1][room_y] = 2
                 room_x += 1
                 img = Game.map.room_choose(map, room_x, room_y)
-                print(img)
                 room = pygame.image.load(img)
-
                 player.x = 604
                 player.y = 224
                 Interface.minimap.player_minimap(map, room)
 
             
             return room, room_x, room_y
+        
+
+
+    class menu():
+
+        def main_menu(screen, running):
+            menu = pygame.image.load("img/menu/main_menu.jpg")
+
+            while running:
+                screen.blit(menu, (0, 0))
+
+                pygame.display.update()
+
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        running = False
+                        pygame.quit()
+
+    class game():
+        def main_game(screen, room_x, room_y, running):
+            player_texture = pygame.image.load("img/players/dimochka.png")
+
+            player = Player(player_texture, None, None, None, 0.6, 0.4, None, 540, 300)
+            player.hitbox = player_texture.get_rect(topleft = (player.x, player.y))
+
+            map = Game.map.rand_map()
+            room = pygame.image.load(Game.map.room_choose(map, room_x, room_y))
+
+            while running:
+
+                
+                Interface.minimap.room_minimap(map, room)
+                Interface.minimap.player_minimap(map, room)
+
+                room, room_x, room_y = Interface.room.room_changing(player, map, room_x, room_y, room)
+
+                screen.blit(room, (0, 0))
+
+                screen.blit(player.texture, (player.x, player.y))
+                Player.moving(player)
+
+                pygame.display.update()
+
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        running = False
+                        pygame.quit()

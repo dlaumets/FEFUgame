@@ -1,4 +1,3 @@
-import random
 import pygame
 
 class Character():
@@ -37,7 +36,7 @@ class Player(Character):
                 self.x += self.diagonal_speed
                 self.y -= self.diagonal_speed
 
-        elif keys[pygame.K_a]:
+        if keys[pygame.K_a]:
             if self.x > 246 or (self.y > 378 and self.y + self.hitbox.height < 510):
                 self.x -= self.speed
         elif keys[pygame.K_d]:

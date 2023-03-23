@@ -1,6 +1,6 @@
 from const import L, R, U, D, DL, UD, UDL, UL, UR, URD, URDL, URL, RD, RDL, RL
 import random
-import pygame
+
 
 class Game():
     class map():
@@ -179,3 +179,5 @@ class Game():
             elif map[i + 1][j] in range(1, 3) and map[i - 1][j] in range(1, 3) and map[i][j + 1] in range(1, 3) and map[i][j - 1] in range(1, 3):
                 return URDL
             
+
+
