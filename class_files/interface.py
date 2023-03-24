@@ -10,6 +10,10 @@ class Interface():
         font_type = pygame.font.Font(font_type, font_size)
         text = font_type.render(message, True, font_color)
         screen.blit(text, (x, y))
+    
+    on = pygame.image.load("img/sound/on.png")
+    off = pygame.image.load("img/sound/off.png")
+    flPause = False
 
 
     class minimap():
@@ -95,8 +99,6 @@ class Interface():
 
     class menu():
         def player_choose(screen, running):
-            on = pygame.image.load("img/sound/on.png")
-            off = pygame.image.load("img/sound/off.png")
 
             menu = pygame.image.load("img/menu/main_menu.jpg")
             vanechka = pygame.image.load("img/players/big/vanechka.png")
@@ -109,17 +111,17 @@ class Interface():
 
 
 
-            flPause = False
+            
 
             choose = 1
 
             while running:
                 screen.blit(menu, (0, 0))
 
-                if not flPause:
-                    screen.blit(on, (10, 10))
+                if not Interface.flPause:
+                    screen.blit(Interface.on, (10, 10))
                 else:
-                    screen.blit(off, (10, 10))
+                    screen.blit(Interface.off, (10, 10))
 
                 Interface.print_text(screen, "Choose a player", 200, 70, "Brown", "fonts/SuperWebcomicBros_Rusbyyakustick_-Regular_0.ttf", 45)
                 Interface.print_text(screen, "The Legend of ACSiE", 800, 70, "Brown", "fonts/FerdinandFont-Regular.ttf", 45)
@@ -153,19 +155,19 @@ class Interface():
                         pygame.quit()
                     elif event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_m:
-                            flPause = not flPause
-                            if flPause:
+                            Interface.flPause = not Interface.flPause
+                            if Interface.flPause:
                                 pygame.mixer.music.pause()
                             else:
                                 pygame.mixer.music.unpause()
-                        if event.key == pygame.K_LEFT:
+                        if event.key == pygame.K_LEFT or event.key == pygame.K_a:
                             if choose == 1:
                                 choose = 0
                             elif choose == 2:
                                 choose = 1
                             else:
                                 choose = 2
-                        if event.key == pygame.K_RIGHT:
+                        if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
                             if choose == 1:
                                 choose = 2
                             elif choose == 2:
@@ -187,8 +189,6 @@ class Interface():
 
 
         def main_menu(screen, running):
-            on = pygame.image.load("img/sound/on.png")
-            off = pygame.image.load("img/sound/off.png")
 
             pygame.mixer.music.load("music/main.mp3")
             pygame.mixer.music.play(-1)
@@ -198,16 +198,15 @@ class Interface():
 
             menu = pygame.image.load("img/menu/main_menu.jpg")
             y = 540
-            flPause = 0
 
             while running:
                 clock.tick(FPS)
                 screen.blit(menu, (0, 0))
                 
-                if not flPause:
-                    screen.blit(on, (10, 10))
+                if not Interface.flPause:
+                    screen.blit(Interface.on, (10, 10))
                 else:
-                    screen.blit(off, (10, 10))
+                    screen.blit(Interface.off, (10, 10))
 
                 Interface.print_text(screen, "The Legend of ACSiE", 800, 70, "Brown", "fonts/FerdinandFont-Regular.ttf", 45)
                 Interface.print_text(screen, "Tears of students", 860, 120, "Brown", "fonts/FerdinandFont-Regular.ttf", 35)
@@ -227,8 +226,8 @@ class Interface():
                         pygame.quit()
                     elif event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_m:
-                            flPause = not flPause
-                            if flPause:
+                            Interface.flPause = not Interface.flPause
+                            if Interface.flPause:
                                 pygame.mixer.music.pause()
                             else:
                                 pygame.mixer.music.unpause()
@@ -251,6 +250,7 @@ class Interface():
             map = Game.map.rand_map()
             room = pygame.image.load(Game.map.room_choose(map, room_x, room_y))
 
+
             while running:
 
                 
@@ -270,4 +270,10 @@ class Interface():
                     if event.type == pygame.QUIT:
                         running = False
                         pygame.quit()
-
+                    elif event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_m:
+                            Interface.flPause = not Interface.flPause
+                            if Interface.flPause:
+                                pygame.mixer.music.pause()
+                            else:
+                                pygame.mixer.music.unpause()
