@@ -14,6 +14,7 @@ class Interface():
     off = pygame.image.load("img/sound/off.png")
     flPause = False
 
+
     class minimap():
         def room_minimap(map, room):
 
@@ -139,7 +140,7 @@ class Interface():
             shaman_small = pygame.image.load("img/players/shaman.png")
 
 
-            
+
 
             choose = 1
 
@@ -272,7 +273,7 @@ class Interface():
             map = Game.map.rand_map()
             room = pygame.image.load(Game.map.room_choose(map, room_x, room_y))
 
-            
+
             while running:
                 
                 Interface.minimap.room_minimap(map, room)
@@ -298,3 +299,5 @@ class Interface():
                                 pygame.mixer.music.pause()
                             else:
                                 pygame.mixer.music.unpause()
+
+
