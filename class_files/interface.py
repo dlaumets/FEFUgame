@@ -4,22 +4,53 @@ from class_files.classes import Player
 import time
 
 
-
 class Interface():
     def print_text(screen, message, x, y, font_color=(0, 0, 0), font_type = "", font_size = 0):
         font_type = pygame.font.Font(font_type, font_size)
         text = font_type.render(message, True, font_color)
         screen.blit(text, (x, y))
-
+    
+    on = pygame.image.load("img/sound/on.png")
+    off = pygame.image.load("img/sound/off.png")
+    flPause = False
 
     class minimap():
         def room_minimap(map, room):
-            # pygame.draw.rect(room, "Grey", (1075, 15, 200, 200))
 
             for i in range(10):
                 for j in range(10):
-                    if map[i][j] in range(1, 3):
-                        pygame.draw.rect(room, "Black", (1075 + (j + 1) * 20, 15 + (i + 1) * 20, 17, 17))
+
+                    if map[i][j] in range(2, 4):
+                        pygame.draw.rect(room, (160, 160, 160), (1075 + (j + 1) * 20, 15 + (i + 1) * 20, 17, 17))
+                    if map[i][j] == 2 or map[i][j] == 3:
+                        if map[i][j - 1] == 1:
+                            pygame.draw.rect(room, (96, 96, 96), (1075 + (j) * 20, 15 + (i + 1) * 20, 17, 17))
+                        if map[i][j + 1] == 1:
+                            pygame.draw.rect(room, (96, 96, 96), (1075 + (j + 2) * 20, 15 + (i + 1) * 20, 17, 17))
+                        if map[i - 1][j] == 1:
+                            pygame.draw.rect(room, (96, 96, 96), (1075 + (j + 1) * 20, 15 + (i) * 20, 17, 17))
+                        if map[i + 1][j] == 1:
+                            pygame.draw.rect(room, (96, 96, 96), (1075 + (j + 1) * 20, 15 + (i + 2) * 20, 17, 17))
+
+                        if map[i][j - 1] == 4:
+                            pygame.draw.rect(room, "Red", (1075 + (j) * 20, 15 + (i + 1) * 20, 17, 17))
+                        if map[i][j + 1] == 4:
+                            pygame.draw.rect(room, "Red", (1075 + (j + 2) * 20, 15 + (i + 1) * 20, 17, 17))
+                        if map[i - 1][j] == 4:
+                            pygame.draw.rect(room, "Red", (1075 + (j + 1) * 20, 15 + (i) * 20, 17, 17))
+                        if map[i + 1][j] == 4:
+                            pygame.draw.rect(room, "Red", (1075 + (j + 1) * 20, 15 + (i + 2) * 20, 17, 17))
+
+                        if map[i][j - 1] == 5:
+                            pygame.draw.rect(room, "Gold", (1075 + (j) * 20, 15 + (i + 1) * 20, 17, 17))
+                        if map[i][j + 1] == 5:
+                            pygame.draw.rect(room, "Gold", (1075 + (j + 2) * 20, 15 + (i + 1) * 20, 17, 17))
+                        if map[i - 1][j] == 5:
+                            pygame.draw.rect(room, "Gold", (1075 + (j + 1) * 20, 15 + (i) * 20, 17, 17))
+                        if map[i + 1][j] == 5:
+                            pygame.draw.rect(room, "Gold", (1075 + (j + 1) * 20, 15 + (i + 2) * 20, 17, 17))
+
+                    
 
         def player_minimap(map, room):
             for i in range(10):
@@ -46,8 +77,9 @@ class Interface():
 
         def room_changing(player, map, room_x, room_y, room): 
 
-            if player.x < 226 and map[room_x][room_y - 1] in range(1, 3):
-                map[room_x][room_y] = 1
+            if player.x < 226 and map[room_x][room_y - 1] != 0:
+                if map[room_x][room_y] not in range(4, 6):
+                    map[room_x][room_y] = 3
                 map[room_x][room_y - 1] = 2
                 room_y -= 1
                 img = Game.map.room_choose(map, room_x, room_y)
@@ -56,9 +88,10 @@ class Interface():
                 player.y = 408
                 Interface.minimap.player_minimap(map, room)
 
+            if player.x > 1000 and map[room_x][room_y + 1] != 0:
+                if map[room_x][room_y] not in range(4, 6):
+                    map[room_x][room_y] = 3
 
-            if player.x > 1000 and map[room_x][room_y + 1] in range(1, 3):
-                map[room_x][room_y] = 1
                 map[room_x][room_y + 1] = 2
                 room_y += 1
                 img = Game.map.room_choose(map, room_x, room_y)
@@ -67,8 +100,9 @@ class Interface():
                 player.y = 418
                 Interface.minimap.player_minimap(map, room)
 
-            if player.y < 195 and map[room_x - 1][room_y] in range(1, 3):
-                map[room_x][room_y] = 1
+            if player.y < 195 and map[room_x - 1][room_y] != 0:
+                if map[room_x][room_y] not in range(4, 6):
+                    map[room_x][room_y] = 3
                 map[room_x - 1][room_y] = 2
                 room_x -= 1
                 img = Game.map.room_choose(map, room_x, room_y)
@@ -77,9 +111,9 @@ class Interface():
                 player.y = 603
                 Interface.minimap.player_minimap(map, room)
 
-
-            if player.y > 640 and map[room_x + 1][room_y] in range(1, 3):
-                map[room_x][room_y] = 1
+            if player.y > 640 and map[room_x + 1][room_y] != 0:
+                if map[room_x][room_y] not in range(4, 6):
+                    map[room_x][room_y] = 3
                 map[room_x + 1][room_y] = 2
                 room_x += 1
                 img = Game.map.room_choose(map, room_x, room_y)
@@ -92,11 +126,8 @@ class Interface():
             return room, room_x, room_y
         
 
-
     class menu():
         def player_choose(screen, running):
-            on = pygame.image.load("img/sound/on.png")
-            off = pygame.image.load("img/sound/off.png")
 
             menu = pygame.image.load("img/menu/main_menu.jpg")
             vanechka = pygame.image.load("img/players/big/vanechka.png")
@@ -108,18 +139,17 @@ class Interface():
             shaman_small = pygame.image.load("img/players/shaman.png")
 
 
-
-            flPause = False
+            
 
             choose = 1
 
             while running:
                 screen.blit(menu, (0, 0))
 
-                if not flPause:
-                    screen.blit(on, (10, 10))
+                if not Interface.flPause:
+                    screen.blit(Interface.on, (10, 10))
                 else:
-                    screen.blit(off, (10, 10))
+                    screen.blit(Interface.off, (10, 10))
 
                 Interface.print_text(screen, "Choose a player", 200, 70, "Brown", "fonts/SuperWebcomicBros_Rusbyyakustick_-Regular_0.ttf", 45)
                 Interface.print_text(screen, "The Legend of ACSiE", 800, 70, "Brown", "fonts/FerdinandFont-Regular.ttf", 45)
@@ -129,14 +159,12 @@ class Interface():
                 screen.blit(dimochka, (500, 249))
                 screen.blit(shaman, (950, 200))
 
-
                 if choose == 0:
                     pygame.draw.rect(screen, "Light Green", (100, 300, 200, 200), 5)
                 elif choose == 1:
                     pygame.draw.rect(screen, "Light Green", (500, 249, 250, 251), 5)
                 elif choose == 2:
                     pygame.draw.rect(screen, "Light Green", (950, 200, 200, 300), 5)
-
 
                 Interface.print_text(screen, "HP: ||", 165, 510, "White", "fonts/FerdinandFont-Regular.ttf", 25)
                 Interface.print_text(screen, "DMG: ||||", 165, 540, "White", "fonts/FerdinandFont-Regular.ttf", 25)
@@ -153,19 +181,19 @@ class Interface():
                         pygame.quit()
                     elif event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_m:
-                            flPause = not flPause
-                            if flPause:
+                            Interface.flPause = not Interface.flPause
+                            if Interface.flPause:
                                 pygame.mixer.music.pause()
                             else:
                                 pygame.mixer.music.unpause()
-                        if event.key == pygame.K_LEFT:
+                        if event.key == pygame.K_LEFT or event.key == pygame.K_a:
                             if choose == 1:
                                 choose = 0
                             elif choose == 2:
                                 choose = 1
                             else:
                                 choose = 2
-                        if event.key == pygame.K_RIGHT:
+                        if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
                             if choose == 1:
                                 choose = 2
                             elif choose == 2:
@@ -185,10 +213,7 @@ class Interface():
                 pygame.display.update()
 
 
-
         def main_menu(screen, running):
-            on = pygame.image.load("img/sound/on.png")
-            off = pygame.image.load("img/sound/off.png")
 
             pygame.mixer.music.load("music/main.mp3")
             pygame.mixer.music.play(-1)
@@ -198,20 +223,18 @@ class Interface():
 
             menu = pygame.image.load("img/menu/main_menu.jpg")
             y = 540
-            flPause = 0
 
             while running:
                 clock.tick(FPS)
                 screen.blit(menu, (0, 0))
                 
-                if not flPause:
-                    screen.blit(on, (10, 10))
+                if not Interface.flPause:
+                    screen.blit(Interface.on, (10, 10))
                 else:
-                    screen.blit(off, (10, 10))
+                    screen.blit(Interface.off, (10, 10))
 
                 Interface.print_text(screen, "The Legend of ACSiE", 800, 70, "Brown", "fonts/FerdinandFont-Regular.ttf", 45)
                 Interface.print_text(screen, "Tears of students", 860, 120, "Brown", "fonts/FerdinandFont-Regular.ttf", 35)
-
 
                 Interface.print_text(screen, "Press SPACE to START", 430, y, "Grey", "fonts/SuperWebcomicBros_Rusbyyakustick_-Regular_0.ttf", 45) 
                 y += direct_y
@@ -227,14 +250,13 @@ class Interface():
                         pygame.quit()
                     elif event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_m:
-                            flPause = not flPause
-                            if flPause:
+                            Interface.flPause = not Interface.flPause
+                            if Interface.flPause:
                                 pygame.mixer.music.pause()
                             else:
                                 pygame.mixer.music.unpause()
                         if event.key == pygame.K_SPACE:
                             Interface.menu.player_choose(screen, running)
-
 
                 
 
@@ -243,7 +265,6 @@ class Interface():
             room_x = 4
             room_y = 4
             running = True
-            # player_texture = pygame.image.load("img/players/dimochka.png")
 
             player = Player(texture, None, hp, damage, 0.6, 0.4, None, 540, 300)
             player.hitbox = texture.get_rect(topleft = (player.x, player.y))
@@ -251,8 +272,8 @@ class Interface():
             map = Game.map.rand_map()
             room = pygame.image.load(Game.map.room_choose(map, room_x, room_y))
 
+            
             while running:
-
                 
                 Interface.minimap.room_minimap(map, room)
                 Interface.minimap.player_minimap(map, room)
@@ -270,4 +291,10 @@ class Interface():
                     if event.type == pygame.QUIT:
                         running = False
                         pygame.quit()
-
+                    elif event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_m:
+                            Interface.flPause = not Interface.flPause
+                            if Interface.flPause:
+                                pygame.mixer.music.pause()
+                            else:
+                                pygame.mixer.music.unpause()
